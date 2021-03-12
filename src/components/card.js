@@ -20,43 +20,43 @@ const Card = (article) => {
   // </div>
   //
 
-  const card = document.createElement('div') // <div class="card">
-  card.classList.add('card')
+  const card = document.createElement('div'); // <div class="card">
+  card.classList.add('card');
 
-  const headline = document.createElement('div') // <div class="headline">{ headline }</div>
-  headline.classList.add('headline')
-  headline.textContent = article.headline
-  card.appendChild(headline)
+  const headline = document.createElement('div'); // <div class="headline">{ headline }</div>
+  headline.classList.add('headline');
+  headline.textContent = article.headline;
+  card.appendChild(headline);
 
-  const author = document.createElement('div') //<div class="author">
-  author.classList.add('author')
-  card.appendChild(author)
+  const author = document.createElement('div'); //<div class="author">
+  author.classList.add('author');
+  card.appendChild(author);
 
-  const imgContainer = document.createElement('div') //<div class="img-container">
-  imgContainer.classList.add('img-container')
-  author.appendChild(imgContainer)
+  const imgContainer = document.createElement('div'); //<div class="img-container">
+  imgContainer.classList.add('img-container');
+  author.appendChild(imgContainer);
 
-  const authorPhoto = document.createElement('img') //<img src={ authorPhoto }>
-  authorPhoto.src = article.authorPhoto
-  imgContainer.appendChild(authorPhoto)
+  const authorPhoto = document.createElement('img'); //<img src={ authorPhoto }>
+  authorPhoto.src = article.authorPhoto;
+  imgContainer.appendChild(authorPhoto);
 
-  const authorName = document.createElement('span') //<span>By { authorName }</span>
-  authorName.textContent = `By ${article.authorName}`
-  author.appendChild(authorName)
+  const authorName = document.createElement('span'); //<span>By { authorName }</span>
+  authorName.textContent = `By ${article.authorName}`;
+  author.appendChild(authorName);
 
   card.addEventListener("click", () =>
   {
     console.log(article.headline);
-  })
+  });
 
-  return card
+  return card;
 }
 
 const cardAppender = (selector) => {
   axios
   .get("https://lambda-times-api.herokuapp.com/articles")
   .then((res) => {
-    console.log(res.data.articles)
+    // console.log(res.data.articles)
 
     const bs = res.data.articles.bootstrap;
     const js = res.data.articles.javascript;
