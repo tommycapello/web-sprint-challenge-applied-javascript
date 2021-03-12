@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const Card = (article) => {
   // TASK 5
   // ---------------------
@@ -17,17 +19,80 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
+
+  const card = document.createElement('div') // <div class="card">
+  card.classList.add('card')
+
+  const headline = document.createElement('div') // <div class="headline">{ headline }</div>
+  headline.classList.add('headline')
+  headline.textContent = article.headline
+  card.appendChild(headline)
+
+  const author = document.createElement('div') //<div class="author">
+  author.classList.add('author')
+  card.appendChild(author)
+
+  const imgContainer = document.createElement('div') //<div class="img-container">
+  imgContainer.classList.add('img-container')
+  author.appendChild(imgContainer)
+
+  const authorPhoto = document.createElement('img') //<img src={ authorPhoto }>
+  authorPhoto.src = article.authorPhoto
+  imgContainer.appendChild(authorPhoto)
+
+  const authorName = document.createElement('span') //<span>By { authorName }</span>
+  authorName.textContent = `By ${article.authorName}`
+  author.appendChild(authorName)
+
+  card.addEventListener("click", () =>
+  {
+    console.log(article.headline);
+  })
+
+  return card
 }
 
 const cardAppender = (selector) => {
-  // TASK 6
-  // ---------------------
-  // Implement this function that takes a css selector as its only argument.
-  // It should obtain articles from this endpoint: `https://lambda-times-api.herokuapp.com/articles`
-  // However, the articles do not come organized in a single, neat array. Inspect the response closely!
-  // Create a card from each and every article object in the response, using the Card component.
-  // Append each card to the element in the DOM that matches the selector passed to the function.
-  //
-}
+  axios
+  .get("https://lambda-times-api.herokuapp.com/articles")
+  .then((res) => {
+    console.log(res.data.articles)
 
-export { Card, cardAppender }
+    const bs = res.data.articles.bootstrap;
+    const js = res.data.articles.javascript;
+    const jq = res.data.articles.jquery;
+    const node = res.data.articles.node;
+    const tech = res.data.articles.technology;
+
+
+    const newSelector = document.querySelector(selector);
+
+      bs.forEach((item) => {
+        const newCard = Card(item);
+        newSelector.append(newCard);
+      })
+
+      js.forEach((item) => {
+        const newCard = Card(item);
+        newSelector.append(newCard);
+      })
+
+      jq.forEach((item) => {
+        const newCard = Card(item);
+        newSelector.append(newCard);
+      })
+
+    node.forEach((item) => {
+      const newCard = Card(item);
+      newSelector.append(newCard);
+    })
+
+    tech.forEach((item) => {
+      const newCard = Card(item);
+      newSelector.append(newCard);
+})
+
+  })
+  .catch(err => console.log(err));
+}
+  export { Card, cardAppender }
